@@ -12,7 +12,9 @@ function inserirUsuario(mysqli $conexao, string $nome, string $email, string $se
 
 
 // Função codificaSenha: usada em usuario-insere.php e usuario-atualiza.php
-
+function codificaSenha(string $senha):string {
+    return password_hash($senha, PASSWORD_DEFAULT);
+};
 // fim codificaSenha
 
 
