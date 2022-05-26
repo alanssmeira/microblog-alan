@@ -2,7 +2,11 @@
 require "conecta.php";
 
 // Função inserirUsuario: usada em usuario-insere.php
+function inserirUsuario(mysqli $conexao, string $nome, string $email, string $senha, string $tipo){
+    $sql = "INSERT INTO usuarios(nome, email, senha, tipo) VALUES ('$nome', '$email', '$senha', '$tipo')";
 
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+};
 // fim inserirUsuario
 
 
