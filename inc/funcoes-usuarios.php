@@ -37,13 +37,21 @@ return $usuarios;
 
 
 // Função excluirUsuario: usada em usuario-exclui.php
+function excluirUsuario() {
 
+}
 // fim excluirUsuario
 
 
 
 // Função lerUmUsuario: usada em usuario-atualiza.php
+function lerUmUsuario(mysqli $conexao, int $id):array {
+    $sql = "SELECT id, nome, email, tipo, senha FROM usuarios WHERE id = $id";
 
+    $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
+    return mysqli_fetch_assoc($resultado);
+}
 // fim lerUmUsuario
 
 
@@ -55,7 +63,11 @@ return $usuarios;
 
 
 // Função atualizarUsuario: usada em usuario-atualiza.php
+function atualizarUsuario(mysqli $conexao, string $nome, string $id, string $email, string $senha, string $tipo) {
+    $sql = "UPDATE usuarios SET nome = '$nome', email = '$email', senha = '$senha', tipo = '$tipo' WHERE id = $id"; // id é número inteiro, não precisa de aspas
 
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+}
 // fim atualizarUsuario
 
 
