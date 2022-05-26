@@ -14,13 +14,24 @@ function inserirUsuario(mysqli $conexao, string $nome, string $email, string $se
 // Função codificaSenha: usada em usuario-insere.php e usuario-atualiza.php
 function codificaSenha(string $senha):string {
     return password_hash($senha, PASSWORD_DEFAULT);
-};
+}
 // fim codificaSenha
 
 
 
 // Função lerUsuarios: usada em usuarios.php
+function lerUsuarios(mysqli $conexao):array {
+    $sql = "SELECT id, nome, email, tipo FROM usuarios ORDER BY nome";
 
+    $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
+$usuarios = [];
+while ($usuario = mysqli_fetch_assoc($resultado)) {
+    array_push($usuarios, $usuario);
+}
+
+return $usuarios;
+}
 // fim lerUsuarios
 
 
