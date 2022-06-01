@@ -18,3 +18,20 @@ function verificaAcesso(){
         die();
     }
 }
+
+function login($id, $nome, $email, $tipo){
+    /* Variáveis de sessão ao logar */
+    $_SESSION['id'] = $id;
+    $_SESSION['nome'] = $nome;
+    $_SESSION['email'] = $email;
+    $_SESSION['tipo'] = $tipo;
+}
+
+
+/*  Usado nas págs adm quando clicamos em sair */
+function logout(){
+    session_start();
+    session_destroy();
+    header("location:login.php");
+    die();
+}
