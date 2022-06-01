@@ -20,9 +20,8 @@ if (isset($_POST['atualizar'])) {
     $senha = verificaSenha($_POST['senha'], $usuario['senha']);
   }
 
-  echo "senha no banco ".$usuario['senha'];
-  echo "<br>";
-  echo "senha no form ".$senha;
+  atualizarUsuario($conexao, $nome, $id, $email, $senha, $tipo);
+	header("location:usuarios.php");
 }
 ?>
 
