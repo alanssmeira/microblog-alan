@@ -10,7 +10,7 @@ if (isset($_POST['inserir'])) {
 	$senha = codificaSenha($_POST ['senha']);
 
 	inserirUsuario($conexao, $nome, $email, $senha, $tipo);
-	header("loacation:usuarios.php");
+	header("location:usuarios.php");
 }
 ?> 
        
