@@ -86,7 +86,12 @@ function atualizarUsuario(mysqli $conexao, string $nome, string $id, string $ema
 
 
 // Função buscarUsuario: usada em login.php
+function buscarUsuario(mysqli $conexao, string $email){
+    $sql = "SELECT id, nome, email, tipo, senha FROM usuarios WHERE email = '$email'";
 
+    $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+    return mysqli_fetch_assoc($resultado);
+}
 // fim buscarUsuario
 
 
