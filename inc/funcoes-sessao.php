@@ -32,6 +32,17 @@ function login($id, $nome, $email, $tipo){
 function logout(){
     session_start();
     session_destroy();
-    header("location:login.php");
+    header("location:../login.php?logout");
     die();
+}
+
+function verificaAcessoAdmin(){
+
+    /* Se o tipo de usuário logado NÃO FOR admin */
+    if ($_SESSION['tipo'] != 'admin') {
+
+        //Redirecione para a pág não autorizado
+        header("location:nao-autorizado.php");
+        die(); // ou exit
+    }
 }
