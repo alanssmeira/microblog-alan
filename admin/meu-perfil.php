@@ -6,6 +6,26 @@ require "../inc/funcoes-usuarios.php";
 ]) */
 $usuario = lerUmUsuario($conexao, $_SESSION['id']);
 
+if (isset($_POST['atualizar'])) {
+  $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
+  $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+  $tipo = $_SESSION['tipo']; // recuperar qual o tipo de usuário
+  $id = $_SESSION['id']; // muda o nome da variável para o atualizarSenha()
+
+  /* Lógica para senha
+  Se o campo da senha do form estiver vazio,
+  então significa que o usuário NÃO MUDOU A SENHA. */
+  if (empty($_POST['senha'])) {
+    $senha = $usuario['senha']; // manter a senha já xistente no banco
+  } else {
+  /* Caso contrário, se o usuário digitou algo no campo senha, precisaremos verificar a senha digitada. */
+    $senha = verificaSenha($_POST['senha'], $usuario['senha']);
+  }
+
+  atualizarUsuario($conexao, $nome, $id, $email, $senha, $tipo);
+	header("location:index.php");
+}
+
 ?>
   <div class="row">
     <article class="col-12 bg-white rounded shadow my-1 py-4">
