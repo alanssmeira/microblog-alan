@@ -12,8 +12,16 @@ function inserirPost(mysqli $conexao, string $titulo, string $texto, string $res
 
 
 /* Usada em posts.php */
-function lerPosts(mysqli $conexao):array {
-    $sql = "";
+function lerPosts(mysqli $conexao, int $idUsuarioLogado, string $tipoUsuarioLogado):array {
+    /* Se o tipo de usuário for ADMIN */
+    if ($tipoUsuarioLogado == 'admin') {
+        // SQL que traga todos os posts (qualquer usuário)
+        $sql = "SELECT posts.id, posts.titulo, posts.data, usuarios.nome AS autor FROM posts INNER JOIN usuarios ON posts.usuario_id = usuarios.id ORDER BY data DESC";
+        
+    } else {
+        // Senão, montamos um SQL que traga os posts apenas do editor
+        $sql = "SELECT id, titulo, data FROM posts WHERE usuario_id = $idUsuarioLogado ORDER BY data DESC";
+    }
 
     $resultado = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
     $posts = [];
