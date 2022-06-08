@@ -1,5 +1,16 @@
 <?php
+
 require "../inc/cabecalho-admin.php"; 
+require "../inc/funcoes-posts.php"; 
+
+// Pegar o Id do post vindo da URL
+$idPost = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+// Pegar os dados de sessão do usuário logado
+$idUsuarioLogado = $_SESSION['id'];
+$tipoUsuarioLogado = $_SESSION['tipo'];
+
+$post = lerUmPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado);
 
 
 ?>
@@ -12,24 +23,24 @@ require "../inc/cabecalho-admin.php";
         
       <div class="form-group">
         <label for="titulo">Título:</label>
-        <input class="form-control" type="text" id="titulo" name="titulo" required>
+        <input value="<?= $post['titulo']?>" class="form-control" type="text" id="titulo" name="titulo" required>
       </div>
       
       <div class="form-group">
         <label for="texto">Texto:</label>
-        <textarea class="form-control" name="texto" id="texto" cols="50" rows="10" required></textarea>
+        <textarea class="form-control" name="texto" id="texto" cols="50" rows="10" required><?= $post['texto']?></textarea>
       </div>
       
       <div class="form-group">
         <label for="resumo">Resumo (máximo de 300 caracteres):</label>
         <span id="maximo" class="badge badge-success">0</span>
-        <textarea class="form-control" name="resumo" id="resumo" cols="50" rows="3" required maxlength="300"></textarea>
+        <textarea class="form-control" name="resumo" id="resumo" cols="50" rows="3" required maxlength="300"><?= $post['resumo']?></textarea>
       </div>
       
       <div class="form-group">
         <label for="imagem-existente">Imagem do post:</label>
         <!-- campo somente leitura, meramente informativo -->
-        <input class="form-control" type="text" id="imagem-existente" name="imagem-existente" readonly>
+        <input value="<?= $post['imagem']?>" class="form-control" type="text" id="imagem-existente" name="imagem-existente" readonly>
       </div>            
           
       <div class="form-group">
