@@ -12,6 +12,30 @@ $tipoUsuarioLogado = $_SESSION['tipo'];
 
 $post = lerUmPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado);
 
+if (isset($_POST['atualizar'])) {
+  $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
+  $texto = filter_input(INPUT_POST, 'texto', FILTER_SANITIZE_SPECIAL_CHARS);
+  $resumo = filter_input(INPUT_POST, 'resumo', FILTER_SANITIZE_SPECIAL_CHARS);
+
+  /* 1) Se o campo imagem estiver vazio, significa que o usuário não quer trocar de imagem. Ou seja, o sistema vai manter a imagem existente. */
+  if (empty($_FILES['imagem']['name'])) {
+    $imagem = $_POST['imagem-existente'];
+
+  } else {
+    /* 2) Senão, pegue a referência da nova imagem e faça o procsso de upload para o servidor */
+    $imagem = $_FILES['imagem']['name'];
+    upload($_FILES['imagem']);
+    
+  }
+
+  /* 3) Somente depois do processo de upload (se necessário), chamaremos a função de atualizarPost */
+  atualizarPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado, $titulo, $texto, $resumo, $imagem);
+
+  header("location:posts.php");
+
+}
+
+
 
 ?>
        
@@ -19,7 +43,7 @@ $post = lerUmPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado);
   <article class="col-12 bg-white rounded shadow my-1 py-4">
     <h2 class="text-center">Atualizar Post</h2>
 
-    <form class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar"> 
+    <form enctype="multipart/form-data" class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar"> 
         
       <div class="form-group">
         <label for="titulo">Título:</label>
