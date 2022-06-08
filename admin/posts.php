@@ -33,7 +33,7 @@ $quantidade = count($posts);
         <?php foreach ($posts as $post) { ?>
           <tr>
             <td> <?=$post['titulo']?> </td>
-            <td> <?=$post['data']?> </td>
+            <td> <?=formataData($post['data'])?> </td>
 
             <!-- Restringe ao admin, acesso ao usuario que criou o post -->
             <?php if($_SESSION['tipo'] == 'admin'){ ?>
